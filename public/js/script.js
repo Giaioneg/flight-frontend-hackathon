@@ -97,7 +97,7 @@ if (form) {
 
         try {
             // LLAMADA AL BACKEND REAL
-            const response = await fetch("https://prizes-graphical-karaoke-firms.trycloudflare.com/predict", {
+            const response = await fetch("https://lay-represented-beverly-mix.trycloudflare.com/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
