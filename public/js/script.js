@@ -103,8 +103,8 @@ if (form) {
                 body: JSON.stringify({
                     CARRIER_NAME: carrierReal,
                     DEPARTING_AIRPORT: airportReal,
-                    FECHA: date,
-                    HORA: time
+                    DATE: date,
+                    TIME: time
                 })
             });
 
