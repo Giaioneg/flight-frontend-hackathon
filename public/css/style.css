@@ -73,6 +73,27 @@ body::before {
     flex-shrink: 0;
     max-height: 95dvh; /* La tarjeta nunca será más alta que el 95% de la pantalla */
     overflow-y: auto; /* Si el contenido no cabe, el scroll ocurre DENTRO de la tarjeta */
+    scrollbar-width: thin; /* Firefox: barra fina */
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* Firefox: color del thumb y track */
+}
+
+/* Personalización elegante del scrollbar (Chrome, Edge, Safari) */
+.card::-webkit-scrollbar {
+    width: 6px; /* Grosor fino */
+}
+
+.card::-webkit-scrollbar-track {
+    background: transparent; /* Fondo invisible */
+    margin: 10px 0; /* Margen para respetar los bordes redondeados */
+}
+
+.card::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15); /* Color sutil */
+    border-radius: 20px; /* Bordes totalmente redondeados */
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* Un poco más visible al interactuar */
 }
 
 /* Contenedor para el modelo 3D - pantalla completa */
