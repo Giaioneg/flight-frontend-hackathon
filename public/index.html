@@ -1,52 +1,80 @@
+<!-- 
+    FlightOnTime - Sistema de Predicción de Riesgos de Vuelos
+    Autor: Flight Frontend Hackathon Team
+    Descripción: Aplicación web moderna con interfaz 3D para predicción de retrasos de vuelos
+    Tecnologías: HTML5, CSS3, JavaScript ES6+, Three.js
+-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de predicción inteligente de retrasos de vuelos con interfaz 3D">
+    <meta name="keywords" content="vuelos, predicción, retrasos, aviación, 3D">
+    <meta name="author" content="FlightOnTime Team">
     <title>FlightOnTime - Predicción de Vuelos</title>
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Three.js para renderizado 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
-<body>
+<!-- Contenedor principal para el fondo 3D -->
+<body id="background3d-container">
 
+<!-- Tarjeta principal del formulario -->
 <div class="card">
+    <!-- Encabezado con título y descripción -->
     <div class="header">
         <h1>✈️ FlightOnTime</h1>
         <p>Predicción inteligente de retrasos en EE.UU.</p>
     </div>
 
-    <form id="predictionForm" autocomplete="off">
+    <!-- Formulario de predicción con validación HTML5 -->
+    <form id="predictionForm" autocomplete="off" novalidate>
         
+        <!-- Campo de selección de aerolínea con autocompletado -->
         <div class="form-group">
             <label for="carrier-input">Aerolínea</label>
-            <input type="text" id="carrier-input" placeholder="Ej: American, Delta..." required>
+            <input type="text" id="carrier-input" placeholder="Ej: American, Delta..." required autocomplete="off">
             <input type="hidden" id="carrier-real-value" name="CARRIER_NAME">
             <div id="carrier-list" class="autocomplete-items"></div>
         </div>
 
+        <!-- Campo de selección de aeropuerto con autocompletado -->
         <div class="form-group">
             <label for="airport-input">Aeropuerto de Origen</label>
-            <input type="text" id="airport-input" placeholder="Ej: JFK, Miami..." required>
+            <input type="text" id="airport-input" placeholder="Ej: JFK, Miami..." required autocomplete="off">
             <input type="hidden" id="airport-real-value" name="DEPARTING_AIRPORT">
             <div id="airport-list" class="autocomplete-items"></div>
         </div>
 
-        <div class="form-group" style="display: flex; gap: 10px;">
-            <div style="flex: 1;">
-                <label>Fecha</label>
+        <!-- Contenedor flexible para fecha y hora -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="date-input">Fecha</label>
                 <input type="date" id="date-input" required>
             </div>
-            <div style="flex: 1;">
-                <label>Hora</label>
+            <div class="form-group">
+                <label for="time-input">Hora</label>
                 <input type="time" id="time-input" required>
             </div>
         </div>
 
+        <!-- Botón principal de predicción con gradiente dinámico -->
         <button type="submit" class="btn-predict">Predecir Riesgo</button>
     </form>
 
+    <!-- Loader animado para mostrar durante la predicción -->
     <div id="loader" class="loader"></div>
 
+    <!-- Contenedor de resultados con diseño adaptativo -->
     <div id="result" class="result-box">
         <h3 id="result-title"></h3>
         <span id="result-percent" class="big-percent"></span>
@@ -54,7 +82,22 @@
     </div>
 </div>
 
+<!-- Contenedor para el modelo 3D del avión -->
+<div class="model-3d-container" id="model-3d-container"></div>
+
+<!-- Scripts de la aplicación -->
 <script src="js/script.js"></script>
+<script src="js/background3d.js"></script>
+<script>
+    /**
+     * Inicialización de la aplicación cuando el DOM está completamente cargado
+     * Se crea la instancia de Background3D para el modelo 3D del avión
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log(' Inicializando FlightOnTime...');
+        const background3D = new Background3D('background3d-container');
+    });
+</script>
 
 </body>
 </html>
