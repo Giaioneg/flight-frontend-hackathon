@@ -161,7 +161,7 @@ function handleFormSubmit() {
             console.log("🔄 Enviando predicción...");
             
             // LLAMADA AL BACKEND REAL
-            const response = await fetch("https://flightpredictor-1099454781066.us-central1.run.app/api/predict", {
+            const response = await fetch("https://flightpredictor-1099454781066.us-central1.run.app/api/prediction", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
