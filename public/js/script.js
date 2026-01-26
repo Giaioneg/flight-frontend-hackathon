@@ -137,6 +137,21 @@ function handleFormSubmit() {
             return;
         }
 
+        // --- NUEVA VALIDACIÓN DE FECHA ---
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Ignorar hora actual para comparar solo fechas
+
+        // Ajustamos la fecha seleccionada para compensar la zona horaria (UTC vs Local)
+        // O simplemente comparamos cadenas ISO si queremos ser estrictos con el día calendario
+        const selectedDateStr = date; 
+        const todayStr = today.toISOString().split('T')[0];
+
+        if (selectedDateStr < todayStr) {
+            alert("⚠️ No puedes predecir vuelos en el pasado. Por favor selecciona una fecha futura.");
+            return; // Detiene el envío
+        }
+
         // Mostrar loader y ocultar botón/resultados
         btn.style.display = "none";
         loader.style.display = "block";
@@ -146,7 +161,7 @@ function handleFormSubmit() {
             console.log("🔄 Enviando predicción...");
             
             // LLAMADA AL BACKEND REAL
-            const response = await fetch("https://search-periods-principle-weed.trycloudflare.com/predict", {
+            const response = await fetch("https://flightpredictor-1099454781066.us-central1.run.app/api/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -200,14 +215,21 @@ handleFormSubmit();
 
 // --- 5. INICIALIZACIÓN ---
 /**
- * Establece la fecha actual por defecto en el campo de fecha
+ * Establece la fecha actual por defecto y bloquea fechas pasadas
  */
 function setDefaultDate() {
     const dateInput = document.getElementById("date-input");
     if (dateInput) {
         const today = new Date();
-        dateInput.valueAsDate = today;
-        console.log(`📅 Fecha por defecto establecida: ${today.toISOString().split('T')[0]}`);
+        // Ajuste de zona horaria para obtener YYYY-MM-DD local correcto
+        const todayStr = today.toISOString().split('T')[0];
+        
+        dateInput.value = todayStr;
+        
+        // Bloquea días anteriores en el calendario
+        dateInput.setAttribute("min", todayStr);
+        
+        console.log(`📅 Fecha configurada. Mínimo permitido: ${todayStr}`);
     }
 }
 
